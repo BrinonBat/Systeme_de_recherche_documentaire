@@ -1,8 +1,10 @@
 # Systeme de recherche documentaire
-----------------------------------
 
 ### Contexte
-Mise en place d'un système de recherche documentaire dans le cadre d'un projet à effectuer durant la 1ere année de Master
+Projet réalisé durant la 1ere année de Maaster à l'UA.
+Ce projet consiste à la mise en place d'un système de recherche documentaire.
+Pour celà, différentes ressources nous ont été fournies (dossier Assets).
+Plus de détails dans l'énoncé "Projet_recherche_documentaire.docs"
 
 ### Organisation
 
