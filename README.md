@@ -12,22 +12,22 @@ Pour la mise en place de ce projet, nous disposons de 4 semaines (redaction de r
 
 1. Préparation
 	- [x] Découverte des ressources mises à disposition
-	- [] étude déterminant les méthodes à implémenter
+	- [ ] étude déterminant les méthodes à implémenter
 	- [x] Organisation des semaines à venir
 2. mise en place d'un système de base
-	- [] traitement des requêtes
-	- [] mise en place d'un système d'indexation
-	- [] mise en place de la structure du dictionnaire
-	- [] utilisation du Stemmer
-	- [] implémentation d'une première interface 
+	- [ ] traitement des requêtes
+	- [ ] mise en place d'un système d'indexation
+	- [ ] mise en place de la structure du dictionnaire
+	- [ ] utilisation du Stemmer
+	- [ ] implémentation d'une première interface 
 3. amélioration du système
-	- [] terminer le système de base
-	- [] ajout de la prise en compte de la pertinence
-	- [] mispel correction
-	- [] optimisation du système
+	- [ ] terminer le système de base
+	- [ ] ajout de la prise en compte de la pertinence
+	- [ ] mispel correction
+	- [ ] optimisation du système
 4. peauffinage et conclusion
-	- [] amelioration de l'UI
-	- [] rédaction du rapport
+	- [ ] amelioration de l'UI
+	- [ ] rédaction du rapport
 5. post-rendu
-	- [] terminer ce qui n'a pas pu l'être pour avoir un rendu propre
-	- [] mise en place de Javadoc
+	- [ ] terminer ce qui n'a pas pu l'être pour avoir un rendu propre
+	- [ ] mise en place de Javadoc
