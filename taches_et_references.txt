@@ -1,2 +1,9 @@
 comprendre l'implementation de poids par tf-idf : https://gist.github.com/guenodz/d5add59b31114a3a3c66
 2 parcours des fichiers obligés ? (comptage puis calcul) ou utilisation de pointeurs pour en faire un seul.
+
+Reste à faire pour l'indexeur:
+    préparation des cases pour l'indexeur -> OK
+    vérification de l'indexeur avant de réindexer, avec fonctions de réinitialisation -> OK
+    traitement du csv index (sauvegarde, fermeture, ...)
+    utilisation du stemmeur
+    utilisation de stopwords
