@@ -11,7 +11,7 @@ Plus de détails dans l'énoncé "Projet_recherche_documentaire.docs"
 Pour la mise en place de ce projet, nous disposons de 4 semaines (redaction de rapport incluse).
 
 1. Préparation
-	- [x] Découverte des ressources mises à disposition
+	- [x] Découverte des ressources mises à disposition
 	- [x] étude des documents pour décider des méthodes à implémenter
 	- [x] Organisation des semaines à venir
 2. mise en place d'un système de base
@@ -23,9 +23,9 @@ Pour la mise en place de ce projet, nous disposons de 4 semaines (redaction de r
 	- [ ] traitement des requêtes
 	- [ ] ajout de la prise en compte de la pertinence
 	- [ ] mispel correction
-	- [ ] optimisation du système
+	- [ ] optimisation du système
 4. peauffinage et conclusion
-	- [ ] amelioration de l'UI
+	- [ ] amelioration de l'UI
 	- [ ] rédaction du rapport
 5. post-rendu (avant d'archiver le projet)
 	- [ ] terminer ce qui n'a pas pu l'être pour avoir un rendu propre
