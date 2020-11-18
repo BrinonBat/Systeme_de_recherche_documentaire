@@ -57,7 +57,7 @@ public class Indexer {
     // génére l'index à partir du fichier csv. Retourne false s'il y a eu une erreur
     private boolean remplirIndex(){
         boolean isOk=false;
-
+        
         isOk=true;
         return isOk;
     }    
