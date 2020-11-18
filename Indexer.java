@@ -26,11 +26,26 @@ public class Indexer {
     }
 
     public void indexation(){
-        File index= new File("index.csv");
-        //verification qu'au moins un fichier à été ajouté
-        ArrayList<File> aTraiter=sources.list();
 
-        //prends un fichier
+        //verifie s'il y a un nouvea fichier à indexer
+        ArrayList<File> aTraiter= new ArrayList<File>(); // liste des fichiers à traiter
+        File[] li_sources=sources.listFiles(new FiltreSrc()); // prends tous les fichiers sources du dossier
+        // retire des fichiers à traiter ceux qui l'ont déjà été
+        for (File tmp_fic : li_sources){
+            if(!li_fics.contains(tmp_fic)){
+                aTraiter.add(tmp_fic);
+                //System.out.println(tmp_fic); //affiche les fichiers scannés
+            }
+        }
+
+
+
+
+        // on traite les fichiers qui sont à traiter jusqu'à ce qu'il n'y en ai plus.
+        for(File fichier : aTraiter){
+            
+        }
+        File index= new File("index.csv");
     // tokenization
     // Stemmer
     // indexation & stopwords
