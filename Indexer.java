@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -19,7 +20,37 @@ public class Indexer {
         sources = new File(chemin);
         li_fics=new ArrayList<File>(); 
         li_mots=new ArrayList<String>();
-        //if(!chargerIndex()) System.out.println("erreur lors de la récupération de l'index");
+
+        //compte le nombre de lignes dans le stem.txt
+        int nb_mots = 0;
+        try{
+            File file =new File("Assets/stem.txt");
+            if(file.exists()){
+                FileReader fr = new FileReader(file);
+                LineNumberReader lnr = new LineNumberReader(fr);
+                    while (lnr.readLine() != null){
+                    nb_mots++;
+                    }
+                    lnr.close();
+            }else{
+                 System.out.println("stem à récupérer!");
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+
+        //récupération du nombre de fichiers
+        File[] f = sources.listFiles(new FiltreSrc());
+        int nb_fics = 0;
+        for (int i = 0 ; i < f.length ; i++) {
+            if (f[i].isFile()) {
+                nb_fics++;
+            }
+        }
+
+        index=new Reference[nb_fics][nb_mots];
+        if(!chargerIndex()) System.out.println("erreur lors de la récupération de l'index");
     }
 
     public void supprime_index(){
@@ -28,7 +59,7 @@ public class Indexer {
 
         // on supprime l'index
         if(fichier_index.exists()){
-            fichier_index.delete();
+            //fichier_index.delete();
             System.out.println("index correctement supprimé !");
         } else {
             System.out.println("aucun index à supprimer.");
@@ -69,7 +100,6 @@ public class Indexer {
             }
         }
 
-
         System.out.println(li_fics);
         // retire des fichiers à traiter ceux qui l'ont déjà été
         for (File tmp_fic : li_sources){
@@ -107,16 +137,13 @@ public class Indexer {
                //séparation en plusieurs "cases"
                 String[]cases= ligne.split(separateur);
                 
-                // on récupère la liste des fichiers en première ligne
-                if(num_ligne==0){
+                // la liste de fichiers à dété été récupérée durant la verification de maj
+
+                if(num_ligne!=0){ // on rempli la matrice
                     for(int num_col=1;num_col<cases.length;num_col++){
-                        File fic_charge= new File(sources.getAbsolutePath()+cases[num_col]);
-                        li_fics.add(fic_charge);
-                    }
-                } else { // on rempli la matrice
-                    for(int num_col=1;num_col<cases.length;num_col++){
+                        System.out.println(cases[num_col]);
                         Reference ref= new Reference(Float.valueOf(cases[num_col]));
-                        index[num_ligne][num_col]=ref;
+                        index[num_ligne-1][num_col-1]=ref; // retrait des légendes du csv
                     }
                     li_mots.add(cases[0]);//on ajoute le mot à la liste des mots traités
                 }
@@ -143,6 +170,20 @@ public class Indexer {
 
         isOk=true;
         return isOk;
+    }
+
+    public void afficherIndex(){
+        System.out.print("Mots | ");
+        for(int l=0;l<li_fics.size();l++){
+            System.out.print(li_fics.get(l).getName()+" | ");
+        }
+        for(int l=0;l<li_mots.size();l++){
+            System.out.print("\n"+li_mots.get(l));
+            for(int c=0;c<li_fics.size();c++){
+                System.out.print("     "+index[l][c].getPoids());
+            }
+        }
+        System.out.print("\n");
     }
 
 }

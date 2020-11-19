@@ -5,7 +5,6 @@ public class Main {
         //création de l'indexer et vérification de s'il est à jour
         Indexer indexer= new Indexer("Assets/AP/");
         int non_indexe=indexer.nEstPasAJour();
-
         //s'il n'est pas un jour, averti l'utilisateur
         if(non_indexe>0){
             System.out.println("l'index n'est pas à jour de "+non_indexe+" fichiers, voulez-vous le mettre à jour ? y/n");
@@ -18,9 +17,10 @@ public class Main {
         //sinon, il se content de charger
         }else{
             System.out.println(" l'index est à jour !");
-            indexer.chargerIndex();
         }
-
+        //indexer.chargerIndex();
+        indexer.afficherIndex();
+        indexer.supprime_index();
         //lancement de l'interface
             // interface lance traitement de requête
             // affiche le résultat
