@@ -4,6 +4,6 @@ comprendre l'implementation de poids par tf-idf : https://gist.github.com/guenod
 Reste à faire pour l'indexeur:
     préparation des cases pour l'indexeur -> OK
     vérification de l'indexeur avant de réindexer, avec fonctions de réinitialisation -> OK
-    traitement du csv index (sauvegarde, fermeture, ...)
+    traitement du csv index (sauvegarde, fermeture, ...) OK
     utilisation du stemmeur
     utilisation de stopwords
