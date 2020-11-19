@@ -3,7 +3,7 @@ public class Main {
 
     public static void main(String[] args) {
         //indexation des sources AP si nécessaire
-        Indexer indexer= new Indexer("Assets/AP");
+        Indexer indexer= new Indexer("Assets/AP/");
         int non_indexe=indexer.estAJour();
         if(non_indexe>0){
             System.out.println("l'index n'est pas à jour de"+non_indexe+", voulez-vous le mettre à jour ? y/n");

@@ -52,9 +52,9 @@ public class Indexer {
             ligne = br.readLine(); // récupération de la ligne listant les fichiers
             String[]cases= ligne.split(separateur);//séparation en plusieurs "cases"
             for(int num_col=1;num_col<cases.length;num_col++){
-                File fic_charge= new File(sources.getAbsolutePath()+cases[num_col]);
+                File fic_charge= new File(sources+"/"+cases[num_col]);
                 li_fics.add(fic_charge);
-            }    
+            }   
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -69,6 +69,8 @@ public class Indexer {
             }
         }
 
+
+        System.out.println(li_fics);
         // retire des fichiers à traiter ceux qui l'ont déjà été
         for (File tmp_fic : li_sources){
             if(!li_fics.contains(tmp_fic)){
