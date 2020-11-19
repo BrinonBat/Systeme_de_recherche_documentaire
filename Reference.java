@@ -4,7 +4,7 @@ import java.lang.Math;
 public class Reference {
     private float poids;
     private float tf;
-    private int quantite;
+    private Short quantite;
     //constructeur
     Reference(){
         poids=0;
