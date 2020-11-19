@@ -14,13 +14,12 @@ public class Main {
                 indexer.indexation();
             }
         
-        //sinon, il se content de charger
+        //sinon, il se contente de charger
         }else{
             System.out.println(" l'index est à jour !");
         }
-        //indexer.chargerIndex();
-        indexer.afficherIndex();
-        indexer.supprime_index();
+
+
         //lancement de l'interface
             // interface lance traitement de requête
             // affiche le résultat

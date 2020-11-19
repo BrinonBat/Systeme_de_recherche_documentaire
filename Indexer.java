@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Vector;
 
 public class Indexer {
     // [0][1-x] contient les noms de fichiers 
@@ -39,47 +40,54 @@ public class Indexer {
 
     // retourne le nombre de fichier manquant à l'index
     public int nEstPasAJour(){
-        //verifie s'il y a un nouvea fichier à indexer
-        ArrayList<File> a_traiter= new ArrayList<File>(); // liste des fichiers à indexer
-        File[] li_sources=sources.listFiles(new FiltreSrc()); // prends tous les fichiers sources du dossier
-        ArrayList<File> li_fics= new ArrayList<File>(); // liste de fichiers indéxés
 
-        // chargement de la liste de fichiers
-        BufferedReader br = null;
-        String ligne="";
-        String separateur= ";";
+        // uniquement s'il y a un index
+        if(fichier_index.exists()){
 
-        try {
-            //parcours du fichier et lecture
-            br = new BufferedReader(new FileReader(fichier_index.getAbsolutePath()));
-            ligne = br.readLine(); // récupération de la ligne listant les fichiers
-            String[]cases= ligne.split(separateur);//séparation en plusieurs "cases"
-            for(int num_col=1;num_col<cases.length;num_col++){
-                File fic_charge= new File(sources+"/"+cases[num_col]);
-                li_fics.add(fic_charge);
-            }   
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try { // fermeture du lecteur de csv
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+            //verifie s'il y a un nouvea fichier à indexer
+            ArrayList<File> a_traiter= new ArrayList<File>(); // liste des fichiers à indexer
+            File[] li_sources=sources.listFiles(new FiltreSrc()); // prends tous les fichiers sources du dossier
+            ArrayList<File> li_fics= new ArrayList<File>(); // liste de fichiers indéxés
+
+            // chargement de la liste de fichiers
+            BufferedReader br = null;
+            String ligne="";
+            String separateur= ";";
+
+            try {
+                //parcours du fichier et lecture
+                br = new BufferedReader(new FileReader(fichier_index.getAbsolutePath()));
+                ligne = br.readLine(); // récupération de la ligne listant les fichiers
+                String[]cases= ligne.split(separateur);//séparation en plusieurs "cases"
+                for(int num_col=1;num_col<cases.length;num_col++){
+                    File fic_charge= new File(sources+"/"+cases[num_col]);
+                    li_fics.add(fic_charge);
+                }   
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (br != null) {
+                    try { // fermeture du lecteur de csv
+                        br.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        }
 
-        // retire des fichiers à traiter ceux qui l'ont déjà été
-        for (File tmp_fic : li_sources){
-            if(!li_fics.contains(tmp_fic)){
-                a_traiter.add(tmp_fic);
-                //System.out.println(tmp_fic); //affiche les fichiers scannés
+            // retire des fichiers à traiter ceux qui l'ont déjà été
+            for (File tmp_fic : li_sources){
+                if(!li_fics.contains(tmp_fic)){
+                    a_traiter.add(tmp_fic);
+                    //System.out.println(tmp_fic); //affiche les fichiers scannés
+                }
             }
-        }
-        return(a_traiter.size());
+            return(a_traiter.size());
+
+        } else return(sources.listFiles(new FiltreSrc()).length); // s'il n'y a pas d'index, on retourne le nombre de fichiers existants
+        
     }
 
     public void indexation(){
@@ -137,29 +145,54 @@ public class Indexer {
         return isOk;
     }    
 
+    //exporte l'index en fichier .csv
     private boolean sauverIndex(){
         boolean isOk=false;
-        /*
         boolean first = true;
-
-
-        FileWriter writer = new FileWriter(fichier_index);
-        char separators=';';
- 
-         StringBuilder sb = new StringBuilder();
-         for (String value :) {
-             if (!first) {
-                 sb.append(separators);
-             }
-             sb.append(separators).append(value).append(separators);
-             
- 
-             first = false;
-         }
-         sb.append("\n");
-         writer.append(sb.toString());
-         */
-        isOk=true;
+        
+        vecFichier test=new vecFichier(new File(sources+"/test"));
+        index.add(test);
+        try{
+            FileWriter writer = new FileWriter(fichier_index);
+            char separators=';';
+    
+            for(int ligne=0;ligne<=li_mots.size();ligne++){
+                ArrayList<String> a_ajouter=new ArrayList<String>();
+                //ajout de l'en-tête
+                if(ligne==0){
+                    //ajout du mot tampon
+                    a_ajouter.add("Mots");
+                    //ajout des noms de chaque fichier
+                    for(int numFic=0;numFic<index.size();numFic++){
+                        a_ajouter.add(index.get(numFic).getFichier().getName());
+                    }
+                }else{
+                    //ajout du mot traité
+                    a_ajouter.add(li_mots.get(ligne-1));
+                    //ajout des poids de chaque fichier pour ce mot
+                    for(int numFic=0;numFic<index.size();numFic++){
+                        a_ajouter.add(Float.toString(index.get(numFic).getPoids(ligne)));
+                    }
+                }
+                //ajout des autres lignes
+                StringBuilder sb = new StringBuilder();
+                for (String value : a_ajouter) {
+                    if (!first) {
+                        sb.append(separators);
+                    }
+                    sb.append(separators).append(value).append(separators);
+                    first = false;
+                }
+                sb.append("\n");
+                writer.append(sb.toString());
+            }
+                writer.flush();
+                writer.close();
+                isOk=true;
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+        
         return isOk;
     }
 
