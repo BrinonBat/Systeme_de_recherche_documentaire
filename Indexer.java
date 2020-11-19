@@ -100,7 +100,6 @@ public class Indexer {
             }
         }
 
-        System.out.println(li_fics);
         // retire des fichiers à traiter ceux qui l'ont déjà été
         for (File tmp_fic : li_sources){
             if(!li_fics.contains(tmp_fic)){
@@ -124,7 +123,6 @@ public class Indexer {
     // génére l'index à partir du fichier csv. Retourne false s'il y a eu une erreur
     public boolean chargerIndex(){
         boolean isOk=false;
-
         BufferedReader br = null;
         String ligne="";
         String separateur= ";";
@@ -141,7 +139,6 @@ public class Indexer {
 
                 if(num_ligne!=0){ // on rempli la matrice
                     for(int num_col=1;num_col<cases.length;num_col++){
-                        System.out.println(cases[num_col]);
                         Reference ref= new Reference(Float.valueOf(cases[num_col]));
                         index[num_ligne-1][num_col-1]=ref; // retrait des légendes du csv
                     }
