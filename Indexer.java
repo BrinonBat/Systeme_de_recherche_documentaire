@@ -36,7 +36,7 @@ public class Indexer {
     }
 
     // retourne le nombre de fichier manquant à l'index
-    public int estAJour(){
+    public int nEstPasAJour(){
         //verifie s'il y a un nouvea fichier à indexer
         ArrayList<File> a_traiter= new ArrayList<File>(); // liste des fichiers à traiter
         File[] li_sources=sources.listFiles(new FiltreSrc()); // prends tous les fichiers sources du dossier
