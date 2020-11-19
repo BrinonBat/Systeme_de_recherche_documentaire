@@ -3,7 +3,7 @@ import java.io.FilenameFilter;
 
 
 public class FiltreSrc implements FilenameFilter {
-        // Refuse les noms qui terminent par '.txt' et '.Z'
+        // Refuse les noms qui terminent par '.txt' et '.Z' ainsi que le readme
         @Override
         public boolean accept(File dir, String name) {
      
