@@ -173,16 +173,23 @@ public class Indexer {
     }
 
     public void afficherIndex(){
+        //Mots est hors des listes, ont doit donc l'afficher à part
         System.out.print("Mots | ");
+
+        //affichage de la liste de fichiers
         for(int l=0;l<li_fics.size();l++){
             System.out.print(li_fics.get(l).getName()+" | ");
         }
+
+        //affichage du contenu de la matrice
         for(int l=0;l<li_mots.size();l++){
             System.out.print("\n"+li_mots.get(l));
             for(int c=0;c<li_fics.size();c++){
-                System.out.print("     "+index[l][c].getPoids());
+                System.out.print("      "+index[l][c].getPoids());
             }
         }
+
+        //saut de ligne pour plus de confort visuel
         System.out.print("\n");
     }
 
