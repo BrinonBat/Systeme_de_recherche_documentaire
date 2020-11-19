@@ -5,10 +5,14 @@ public class Reference {
     private float poids;
     private float tf;
     private Short quantite;
-    //constructeur
+    //constructeurs
     Reference(){
-        poids=0;
         quantite=0;
+        poids=0;
+    }
+    Reference(Float poids_depart){
+        quantite=0;
+        poids=poids_depart.floatValue(); // valeur par défaut en attendant de la calculer
     }
 
     //accesseurs
