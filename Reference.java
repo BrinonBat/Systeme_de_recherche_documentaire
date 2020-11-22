@@ -1,4 +1,3 @@
-import java.util.Vector;
 import java.lang.Math;
 
 public class Reference {
@@ -19,14 +18,17 @@ public class Reference {
     public float getPoids(){
         return this.poids;
     }
+
+    public Short getQuantite(){ return quantite;}
+
     public void setPoids(double idf){
         this.poids=(float)((1+Math.log10(tf))*(Math.log10(idf)));
     }
 
-    public void upQte(){
+    public void setQte(Short qte){
         //!\\ on ne fait pas la maj du TF à chaque ajout, car on a besoin du nombre total de mots du fichier pour l'avoir. 
         //!\\ On le calcule donc une fois l'analyse du fichier fini
-        quantite++;
+        quantite=qte;
     }
 
     public void majTf(int nb_mots){
