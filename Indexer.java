@@ -104,6 +104,7 @@ public class Indexer {
        /* ArrayList<File> li_sources=tokenizer.listerFichiers(); // prends tous les fichiers sources du dossier */
         ArrayList<File> li_sources=new ArrayList<File>();
         li_sources.add(new File(sources+"/testIndex"));
+        li_sources.add(new File(sources+"/testIndex2"));
         li_mots=actualiserIndexMots();
         
         //on traite chaque fichier donné en source
@@ -142,6 +143,11 @@ public class Indexer {
 
             System.out.println("OK3");
         }
+
+        System.out.println("OK4");
+        System.out.println(index.get(0).getFichier());
+        System.out.println(index.get(1).getFichier());
+        System.out.println(index.get(3).getFichier()+" devrait etre vide");
 
         // on mets à jour la matrice en ajoutant les IDF
         for(int ligne=0;ligne<li_mots.size();ligne++){
