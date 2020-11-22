@@ -1,0 +1,17 @@
+ROOT | WORDS
+ceci | erreur
+est | erreur
+un | erreur
+test | erreur
+il | erreur
+doit | erreur
+donc | erreur
+avoir | erreur
+quelques | erreur
+mots | erreur
+compliqués | erreur
+ouvre | erreur
+bon-jour | erreur
+mangeons | erreur
+38 | erreur
+parts | erreur
