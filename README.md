@@ -14,12 +14,12 @@ Pour la mise en place de ce projet, nous disposons de 4 semaines (redaction de r
 	- [x] Découverte des ressources mises à disposition
 	- [x] étude des documents pour décider des méthodes à implémenter
 	- [x] Organisation des semaines à venir
-2. mise en place d'un système de base
-	- [ ] mise en place d'un système d'indexation
+2. mise en place de l'indexation
+	- [x] mise en place d'un système d'indexation
 	- [ ] mise en place de la structure du dictionnaire
-	- [ ] utilisation du Stemmer
+	- [x] utilisation du Stemmer
 	- [ ] implémentation d'une première interface 
-3. amélioration du système
+3. mise en pace du système de requêtes et optimisation
 	- [ ] traitement des requêtes
 	- [ ] ajout de la prise en compte de la pertinence
 	- [ ] mispel correction

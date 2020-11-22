@@ -5,5 +5,7 @@ Reste à faire pour l'indexeur:
     préparation des cases pour l'indexeur -> OK
     vérification de l'indexeur avant de réindexer, avec fonctions de réinitialisation -> OK
     traitement du csv index (sauvegarde, fermeture, ...) OK
-    utilisation du stemmeur
-    utilisation de stopwords
+    utilisation du stemmer OK
+    utilisation de stopwords OK
+    ajout de tests OK
+    débuggage
