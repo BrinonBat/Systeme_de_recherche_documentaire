@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.lang.reflect.Array;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -39,6 +40,7 @@ public class Indexer {
     }
 
     // retourne le nombre de fichier manquant à l'index
+    // !!! A METTRE A JOUR (appel à Tokenizer.listerFichier)
     public int nEstPasAJour(){
 
         // uniquement s'il y a un index
@@ -46,7 +48,7 @@ public class Indexer {
 
             //verifie s'il y a un nouvea fichier à indexer
             ArrayList<File> a_traiter= new ArrayList<File>(); // liste des fichiers à indexer
-            File[] li_sources=sources.listFiles(new FiltreSrc()); // prends tous les fichiers sources du dossier
+            File[] li_source;
             ArrayList<File> li_fics= new ArrayList<File>(); // liste de fichiers indéxés
 
             // chargement de la liste de fichiers
@@ -76,14 +78,14 @@ public class Indexer {
                     }
                 }
             }
-
+            /*
             // retire des fichiers à traiter ceux qui l'ont déjà été
             for (File tmp_fic : li_sources){
                 if(!li_fics.contains(tmp_fic)){
                     a_traiter.add(tmp_fic);
                     //System.out.println(tmp_fic); //affiche les fichiers scannés
                 }
-            }
+            }*/
             return(a_traiter.size());
 
         } else return(sources.listFiles(new FiltreSrc()).length); // s'il n'y a pas d'index, on retourne le nombre de fichiers existants
@@ -91,13 +93,30 @@ public class Indexer {
     }
 
     public void indexation(){
-        // ajout fichier en colonne
-        // parcours du fichier          
-            // tokenization
-            // Stemmer
-            // indexation & stopwords
+        //préparation à l'indexation
+        /*supprime_index();*/
+        Tokenizer tokenizer= new Tokenizer(sources);
+        ArrayList<String> tmp_mots=new ArrayList<String>();
+
+        //parcours la liste des fichiers
+       /* ArrayList<File> li_sources=tokenizer.listerFichiers(); // prends tous les fichiers sources du dossier */
+        ArrayList<File> li_sources=new ArrayList<File>();
+        li_sources.add(new File(sources+"/testIndex"));
+
+        for(int num_fichier=0; num_fichier<li_sources.size();num_fichier++){
+            File tmp_fic=li_sources.get(num_fichier);
+            System.out.println(tmp_fic); //affiche les fichiers scannés
+            index.add(new vecFichier(tmp_fic));
+             
+            // tokenization & stemmer & stopwords
+            //tmp_mots=tokenizer.RecupereMots(index.get(num_fichier).getFichier());
+            // indexation
                 //si mot inconnu, ajout en bas de la liste.
                 //si mot connu, augmente le nombre d'occurence
+            
+        }
+        /*sauverIndex();*/
+        
     }
     
     // génére l'index à partir du fichier csv. Retourne false s'il y a eu une erreur
