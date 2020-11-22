@@ -23,7 +23,7 @@ public class Tokenizer {
 
         try {
             //parcours du fichier et lecture
-            br = new BufferedReader(new FileReader("assets/doclist.txt"));
+            br = new BufferedReader(new FileReader("Assets/doclist.txt"));
             while((ligne = br.readLine()) != null){
                 result.add(new File(sources+"/"+ligne));
             }
@@ -53,18 +53,18 @@ public class Tokenizer {
 
         try {
             //parcours du fichier et lecture
-            br = new BufferedReader(new FileReader(sources.getParent()+"/doclist.txt"));
-            //br = new BufferedReader(new FileReader(fichier);
+            br = new BufferedReader(new FileReader(fichier));
 
             while((ligne = br.readLine()) != null){
                 if(ligne.charAt(0)!='<'){
                     li_mots.addAll(this.traiter(ligne));
                 }
-                else if(ligne.substring(1,4)=="HEAD"){
-                    li_mots.addAll(this.traiter(ligne.substring(5,ligne.length()-6)));
+                else if(ligne.substring(1,5).equals("HEAD")){
+                    li_mots.addAll(this.traiter(ligne.substring(5,ligne.length()-7)));
+
                 }
-                else if(ligne.substring(1,4)=="/DOC"){
-                    matrice_mots.add(li_mots);
+                else if(ligne.substring(1,5).equals("/DOC")){
+                    matrice_mots.add((ArrayList<String>)li_mots.clone());
                     li_mots.clear();
                 }
                 // autres données non-traitées.
@@ -85,7 +85,6 @@ public class Tokenizer {
                 }
             }
         }
-
         return matrice_mots;
     }
 
@@ -96,7 +95,7 @@ public class Tokenizer {
 
         try {
             //parcours du fichier et lecture
-            br = new BufferedReader(new FileReader("assets/doclist.txt"));
+            br = new BufferedReader(new FileReader("Assets/stopwords.txt"));
             while((ligne = br.readLine()) != null){
                 result.add(ligne);
             }

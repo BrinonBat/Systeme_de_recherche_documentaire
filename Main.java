@@ -21,6 +21,7 @@ public class Main {
         //lancement de l'interface
             // interface lance traitement de requête
             // affiche le résultat
+            indexer.indexation();
     }
 
 }
