@@ -115,7 +115,7 @@ public class Indexer {
 
             //indexation de chaque document contenu dans le fichier source
             for (ArrayList<String> fic_traite : vec_li_mots){
-                System.out.println(" ----> traitement du document"+fic_traite);
+                System.out.println(" ----> traitement dans "+tmp_fic+" du document"+fic_traite);
                 //creation du vecFichier correspond au fichier actuel
                 num_fic++;
                 vecFichier vecFichier_tmp = new vecFichier(tmp_fic,num_fic);
@@ -128,7 +128,9 @@ public class Indexer {
                     ref.majTf(fic_traite.size()); // calcul du Tf 
                     vecFichier_tmp.ajoutRef(ref);
                 }
+                System.out.println("OK1");
                 index.add(vecFichier_tmp);
+                System.out.println("OK2");
             } 
         }
 
@@ -212,7 +214,7 @@ public class Indexer {
                     a_ajouter.add("Mots");
                     //ajout des noms de chaque fichier
                     for(int numFic=0;numFic<index.size();numFic++){
-                        a_ajouter.add(index.get(numFic).getFichier().getName());
+                        a_ajouter.add(index.get(numFic).getNomFichier());
                     }
                 }else{
                     //ajout du mot traité
@@ -250,7 +252,7 @@ public class Indexer {
 
         //affichage de la liste de fichiers
         for(int fic=0;fic<index.size();fic++){
-            System.out.print(index.get(fic).getFichier().getName()+" | ");
+            System.out.print(index.get(fic).getNomFichier()+" | ");
         }
 
         //affichage du contenu de la matrice

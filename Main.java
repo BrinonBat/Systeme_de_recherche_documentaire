@@ -20,7 +20,7 @@ public class Main {
         }else{
             System.out.println(" l'index est � jour !");
         }*/
-
+        
         //lancement de l'interface
             // interface lance traitement de requête
             // affiche le résultat

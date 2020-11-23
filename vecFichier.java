@@ -2,12 +2,12 @@ import java.io.File;
 import java.util.Vector;
 
 public class vecFichier {
-    private File fichier;
+    private String nom_fichier;
     Vector<Reference> vec_refs;
 
     //constructeurs
     public vecFichier(File fic){
-        fichier=fic;
+        nom_fichier=fic.getName();
         vec_refs=new Vector<Reference>();
     }
     public vecFichier(File fic,Reference ref){
@@ -31,7 +31,7 @@ public class vecFichier {
             }
             default: break;
         };
-        fichier=new File(fic.getAbsolutePath()+"-"+num);
+        nom_fichier=fic+"-"+num;
         vec_refs=new Vector<Reference>();
     }
 
@@ -43,8 +43,8 @@ public class vecFichier {
         vec_refs.get(position).setPoids(idf);
     }
 
-    public File getFichier(){
-        return fichier;
+    public String getNomFichier(){
+        return nom_fichier;
     }
 
     public Short getQte(int position){

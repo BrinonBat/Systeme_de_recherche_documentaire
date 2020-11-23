@@ -105,7 +105,9 @@ public class Tokenizer {
 
                 }
                 else if(ligne.substring(1,5).equals("/DOC")){
+                    System.out.println("Doc0.1");
                     matrice_mots.add((ArrayList<String>)li_mots.clone());
+                    System.out.println("Doc0.2");
                     li_mots.clear();
                 }
                 // autres données non-traitées.
