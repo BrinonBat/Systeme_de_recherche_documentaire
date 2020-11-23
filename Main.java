@@ -3,14 +3,14 @@ public class Main {
 
     public static void main(String[] args) {
     	
-    	Fenetre fen = new Fenetre();
+    //	Fenetre fen = new Fenetre();
     	
-        //création de l'indexer et vérification de s'il est à  jour
-        //Indexer indexer= new Indexer("Assets/AP/");
+        //crï¿½ation de l'indexer et vï¿½rification de s'il est ï¿½ jour
+        Indexer indexer= new Indexer("Assets/AP/");
         /*int non_indexe=indexer.nEstPasAJour();
         //s'il n'est pas un jour, averti l'utilisateur
         if(non_indexe>0){
-            System.out.println("l'index n'est pas à  jour de "+non_indexe+" fichiers, voulez-vous le mettre à  jour ? y/n");
+            System.out.println("l'index n'est pas ï¿½ jour de "+non_indexe+" fichiers, voulez-vous le mettre ï¿½ jour ? y/n");
             char reponse='y'; // on remplacera par le retour de l'interface
             if(reponse=='y'){
                 indexer.indexation();
@@ -18,13 +18,13 @@ public class Main {
         
         //sinon, il se contente de charger
         }else{
-            System.out.println(" l'index est à  jour !");
+            System.out.println(" l'index est ï¿½ jour !");
         }*/
 
         //lancement de l'interface
             // interface lance traitement de requÃªte
-            // affiche le résultat
-            //indexer.indexation();
+            // affiche le rÃ©sultat
+            indexer.indexation();
     }
 
 }

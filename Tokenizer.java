@@ -95,6 +95,8 @@ public class Tokenizer {
             br = new BufferedReader(new FileReader(fichier));
 
             while((ligne = br.readLine()) != null){
+                System.out.println(ligne);
+                if(ligne.isEmpty() || ligne.isBlank())ligne=br.readLine();
                 if(ligne.charAt(0)!='<'){
                     li_mots.addAll(this.traiter(ligne));
                 }
@@ -161,20 +163,27 @@ public class Tokenizer {
         ArrayList<String> stop_words=this.recupereStopWords(new File(sources.getParent()+"/stopwords.txt"));
         Stemmer stemmer= new Stemmer();
         String mot;
+        boolean est_mot=false;
 
         // tokenisation
         for(int i=0;i<phrase.length();i++){
+            
             if(Character.isSpaceChar(phrase.charAt(i))){ // séparateur de mots
-                //passage au stemmer
-                stemmer.stem();
-                mot=stemmer.toString();
+                if(est_mot){ // si un mot était en cours de formation
+                    //passage au stemmer
+                    stemmer.stem();
+                    mot=stemmer.toString();
 
-                //stoplist et ajout
-                if(!stop_words.contains(mot)){
-                    li_mots.add(mot);
+                    est_mot=false;
+
+                    //stoplist et ajout
+                    if(!stop_words.contains(mot)){
+                        li_mots.add(mot);
+                    }
                 }
             }
             else{
+                est_mot=true;
                 //on compose les mots avec ce filtre
                 if(Character.isLetterOrDigit(phrase.charAt(i)) || phrase.charAt(i)=='-'){
                     stemmer.add(Character.toLowerCase(phrase.charAt(i)));
