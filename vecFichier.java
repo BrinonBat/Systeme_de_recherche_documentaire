@@ -47,6 +47,10 @@ public class vecFichier {
         return fichier;
     }
 
+    public Short getQte(int position){
+        return vec_refs.get(position).getQuantite();
+    }
+
     public void ajoutRef(Reference ref){
         vec_refs.add(ref);
     }

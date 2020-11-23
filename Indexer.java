@@ -95,7 +95,7 @@ public class Indexer {
 
     public void indexation(){
         //préparation à l'indexation
-        /*supprime_index();*/
+        supprime_index();
         Tokenizer tokenizer= new Tokenizer(sources);
         Vector<ArrayList<String>> vec_li_mots= new Vector<ArrayList<String>>();
         short nb_rep_mot;
@@ -128,26 +128,26 @@ public class Indexer {
                 
 
                 System.out.println("OK2");
+                afficherIndex();
 
                 //pour chaque mot, on vérifie son nombre d'occurence dans le fichier
                 for(String mot : li_mots){
                     nb_rep_mot=(short)Collections.frequency(fic_traite, mot);
                     Reference ref=new Reference();
                     ref.setQte(nb_rep_mot); // ajout de la frequence du mot testé
+                    System.out.println("quantité de mot "+mot+": "+nb_rep_mot+". Ajouté :"+ref.getQuantite());
                     ref.majTf(fic_traite.size()); // calcul du Tf 
+                    System.out.println("Tf ajouté :"+fic_traite.size());
                     vecFichier_tmp.ajoutRef(ref);
                 }
                 index.add(vecFichier_tmp);
             } 
-
-
             System.out.println("OK3");
         }
 
         System.out.println("OK4");
         System.out.println(index.get(0).getFichier());
         System.out.println(index.get(1).getFichier());
-        System.out.println(index.get(3).getFichier()+" devrait etre vide");
 
         // on mets à jour la matrice en ajoutant les IDF
         for(int ligne=0;ligne<li_mots.size();ligne++){
@@ -161,11 +161,11 @@ public class Indexer {
             //mise à jour des poids en fonction de l'IDF
             for (int colonne=0;colonne<index.size();colonne++){
                 index.get(colonne).setIDF(ligne,idf);
+
             }
         }
-
-        /*sauverIndex();*/
-        
+        //sauverIndex();
+        afficherIndex();
     }
     
     // génére l'index à partir du fichier csv. Retourne false s'il y a eu une erreur
@@ -218,8 +218,6 @@ public class Indexer {
         boolean isOk=false;
         boolean first = true;
         
-        vecFichier test=new vecFichier(new File(sources+"/test"));
-        index.add(test);
         try{
             FileWriter writer = new FileWriter(fichier_index);
             char separators=';';
@@ -239,7 +237,7 @@ public class Indexer {
                     a_ajouter.add(li_mots.get(ligne-1));
                     //ajout des poids de chaque fichier pour ce mot
                     for(int numFic=0;numFic<index.size();numFic++){
-                        a_ajouter.add(Float.toString(index.get(numFic).getPoids(ligne)));
+                        a_ajouter.add(Double.toString(index.get(numFic).getPoids(ligne)));
                     }
                 }
                 //ajout des autres lignes

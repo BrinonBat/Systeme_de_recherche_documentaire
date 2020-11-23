@@ -5,15 +5,14 @@ public class Reference {
     private float tf;
     private Short quantite;
     //constructeurs
+    Reference(float poids_depart){
+        quantite=0;
+        tf=0;
+        poids=poids_depart; // valeur par défaut en attendant de la calculer
+    }
     Reference(){
-        quantite=0;
-        poids=0;
+        new Reference(0);
     }
-    Reference(Float poids_depart){
-        quantite=0;
-        poids=poids_depart.floatValue(); // valeur par défaut en attendant de la calculer
-    }
-
     //accesseurs
     public float getPoids(){
         return this.poids;
@@ -22,7 +21,12 @@ public class Reference {
     public Short getQuantite(){ return quantite;}
 
     public void setPoids(double idf){
-        this.poids=(float)((1+Math.log10(tf))*(Math.log10(idf)));
+        if(tf==0) idf=0;
+        else{
+            this.poids=(float)((1+Math.log10(tf))*(Math.log10(idf)));
+            this.poids=(float)((Math.round(poids * 1000000.0)) / 1000000.0);
+            System.out.println("calcul de poids avec tf="+tf+"idf="+idf+"donnant le poids "+poids);
+        } ;
     }
 
     public void setQte(Short qte){
@@ -32,12 +36,8 @@ public class Reference {
     }
 
     public void majTf(int nb_mots){
-        this.tf=(quantite/nb_mots);
+        this.tf=((float)quantite/nb_mots);
     }
-
-
-
-    
 }
 
 
