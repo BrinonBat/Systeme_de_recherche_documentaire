@@ -9,3 +9,6 @@ Reste à faire pour l'indexeur:
     utilisation de stopwords OK
     ajout de tests OK
     débuggage
+
+
+/!\ le poids des vecteurs de l'index sont multipliés par 1000

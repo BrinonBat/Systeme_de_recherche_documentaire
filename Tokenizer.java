@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -14,9 +15,8 @@ public class Tokenizer {
         sources=src;
     }
 
-
     // retourne la liste des Fichiers à traiter
-    public ArrayList<File> listerFichiers(){
+    public ArrayList<File> listerFichiersDuDoclist(){
         ArrayList<File> result= new ArrayList<File>();
         BufferedReader br = null;
         String ligne="";
@@ -43,6 +43,45 @@ public class Tokenizer {
             }
         }
         return(result);
+    }
+
+    // retourne la liste des Fichiers à traiter
+    public ArrayList<File> listerFichiers(boolean maj){
+        ArrayList<File> li_fics= new ArrayList<File>();
+        BufferedReader br = null;
+        String ligne="";
+
+        try {
+            FileWriter writer = new FileWriter("Assets/doclist.txt");
+            //parcours du fichier et lecture
+            for(File fichier : (sources.listFiles(new FiltreSrc())))
+            br = new BufferedReader(new FileReader(fichier));
+
+            while((ligne = br.readLine()) != null){
+                if(ligne.substring(0,7).equals("<DOCNO>")){
+                    li_fics.add(new File(sources+"/"+ligne.substring(7,ligne.length()-8)));
+                    if(maj==true) writer.append(sources+"/"+ligne.substring(7,ligne.length()-8)+"\n");
+                }
+                // autres données non-traitées.
+                else {}
+            }
+            if(maj==true) writer.flush();    
+            writer.close();
+        //gestion des erreurs et fermeture du bufferedReader
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try { // fermeture du lecteur de csv
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return li_fics;
     }
 
     public Vector<ArrayList<String>> RecupereMots(File fichier){
@@ -95,7 +134,7 @@ public class Tokenizer {
 
         try {
             //parcours du fichier et lecture
-            br = new BufferedReader(new FileReader("Assets/stopwords.txt"));
+            br = new BufferedReader(new FileReader(liste));
             while((ligne = br.readLine()) != null){
                 result.add(ligne);
             }

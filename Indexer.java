@@ -101,53 +101,36 @@ public class Indexer {
         short nb_rep_mot;
 
         //parcours la liste des fichiers
-       /* ArrayList<File> li_sources=tokenizer.listerFichiers(); // prends tous les fichiers sources du dossier */
-        ArrayList<File> li_sources=new ArrayList<File>();
-        li_sources.add(new File(sources+"/testIndex"));
-        li_sources.add(new File(sources+"/testIndex2"));
+        //ArrayList<File> li_sources=tokenizer.listerFichiers(); // prends tous les fichiers sources du dossier
+        
         li_mots=actualiserIndexMots();
         
         //on traite chaque fichier donné en source
-        for(File tmp_fic : li_sources){
+        for(File tmp_fic : (sources.listFiles(new FiltreSrc()))){
             short num_fic=0;
-            System.out.println(tmp_fic); //affiche les fichiers scannés
-             
-            // OK 
-
+            System.out.println("traitement du fichier "+tmp_fic); //affiche les fichiers scannés
+ 
             // tokenization & stemmer & stopwords
             vec_li_mots=tokenizer.RecupereMots(tmp_fic);
-            System.out.println("vec_lit_mots:"+vec_li_mots);
 
-            //indexation de chaque fichier contenu dans le fichier source
+            //indexation de chaque document contenu dans le fichier source
             for (ArrayList<String> fic_traite : vec_li_mots){
-
-
+                System.out.println(" ----> traitement du document"+fic_traite);
                 //creation du vecFichier correspond au fichier actuel
                 num_fic++;
                 vecFichier vecFichier_tmp = new vecFichier(tmp_fic,num_fic);
-                
-
-                System.out.println("OK2");
-                afficherIndex();
 
                 //pour chaque mot, on vérifie son nombre d'occurence dans le fichier
                 for(String mot : li_mots){
                     nb_rep_mot=(short)Collections.frequency(fic_traite, mot);
                     Reference ref=new Reference();
                     ref.setQte(nb_rep_mot); // ajout de la frequence du mot testé
-                    System.out.println("quantité de mot "+mot+": "+nb_rep_mot+". Ajouté :"+ref.getQuantite());
                     ref.majTf(fic_traite.size()); // calcul du Tf 
-                    System.out.println("Tf ajouté :"+fic_traite.size());
                     vecFichier_tmp.ajoutRef(ref);
                 }
                 index.add(vecFichier_tmp);
             } 
-            System.out.println("OK3");
         }
-
-        System.out.println("OK4");
-        System.out.println(index.get(0).getFichier());
-        System.out.println(index.get(1).getFichier());
 
         // on mets à jour la matrice en ajoutant les IDF
         for(int ligne=0;ligne<li_mots.size();ligne++){
@@ -157,15 +140,14 @@ public class Indexer {
                 if(index.get(colonne).contientMot(ligne)) nb_doc++;
             }
             //mise à jour du IDF
-            double idf=Math.log10((double)index.size()/nb_doc);
+            double idf=((double)index.size()/nb_doc);
             //mise à jour des poids en fonction de l'IDF
             for (int colonne=0;colonne<index.size();colonne++){
                 index.get(colonne).setIDF(ligne,idf);
 
             }
         }
-        //sauverIndex();
-        afficherIndex();
+        sauverIndex();
     }
     
     // génére l'index à partir du fichier csv. Retourne false s'il y a eu une erreur
@@ -237,7 +219,7 @@ public class Indexer {
                     a_ajouter.add(li_mots.get(ligne-1));
                     //ajout des poids de chaque fichier pour ce mot
                     for(int numFic=0;numFic<index.size();numFic++){
-                        a_ajouter.add(Double.toString(index.get(numFic).getPoids(ligne)));
+                        a_ajouter.add(Float.toString(index.get(numFic).getPoids(ligne)));
                     }
                 }
                 //ajout des autres lignes
@@ -292,7 +274,7 @@ public class Indexer {
 
         try {
             //parcours du fichier et lecture
-            br = new BufferedReader(new FileReader("Assets/stemTest.txt"));
+            br = new BufferedReader(new FileReader("Assets/stem.txt"));
 
             // on récupére le mot ROOT pour chaque ligne
             while((ligne = br.readLine()) != null){
