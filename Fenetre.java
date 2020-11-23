@@ -112,33 +112,34 @@ public class Fenetre extends JFrame {
 			}
 			});		
 		
-		// Vérification des mises à jour
+		// Vérifier si l'indexer est à jour après clique sur "rechercher les mises à jour"
 		item_rech_mise_a_jour.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evenement) {
-				// on lance la vérification
-				// S'il n y a pas de mises à jour à effectuer
-				// afficher une boite d'information
-				/*boite_info_pas_de_mise_ajr = new JOptionPane();
-				boite_info_pas_de_mise_ajr.showMessageDialog(null, "Aucune mise à jour trouvée", "Information",
-						JOptionPane.INFORMATION_MESSAGE);*/
-				
-				
-				// S'il y a des mises à jour à effectuer
-				boite_conf_mise_ajr = new JOptionPane();
-				int option = boite_conf_mise_ajr.showConfirmDialog(
-						null, "Voulez-vous lancer la mise à jour ?", "Mise à jour",
-						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-				
-				// Si ok
-				if(option == JOptionPane.OK_OPTION){
-					// Lancement des mises à jour
+				 Indexer indexer = new Indexer("Assets/AP/");
+				 int non_indexe = indexer.nEstPasAJour();
+				 
+				// Si l'indexer n'est pas à jour
+				 if(non_indexe>0) {
+					boite_conf_mise_ajr = new JOptionPane();
+					int option = boite_conf_mise_ajr.showConfirmDialog(
+							null, "L'index n'est pas à jour, voulez-vous le mettre à jour ?", "Mise à jour",
+							JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 					
-					// à la fin afficher une boite d'information
-					boite_info_mise_ajr_ok = new JOptionPane();
-					boite_info_mise_ajr_ok.showMessageDialog(null, "Mise à jour teminée", "Information",
-					JOptionPane.INFORMATION_MESSAGE);
-					
-				}
+						// Si ok
+						if(option == JOptionPane.OK_OPTION){
+							// Mettre à jour
+							indexer.indexation();
+							// à la fin afficher une boite d'information
+							boite_info_mise_ajr_ok = new JOptionPane();
+							boite_info_mise_ajr_ok.showMessageDialog(null, "L'index est à jour", "Information",
+																		JOptionPane.INFORMATION_MESSAGE);						
+						}
+						
+ 				}else {
+					 	boite_info_pas_de_mise_ajr = new JOptionPane();
+						boite_info_pas_de_mise_ajr.showMessageDialog(null, "L'index est à jour", "Information",
+																		JOptionPane.INFORMATION_MESSAGE);
+				 }				
 			}
 			});
 		
