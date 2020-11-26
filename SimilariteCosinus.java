@@ -13,7 +13,7 @@ public class SimilariteCosinus {
 		SimilariteCos(vecteur_req, vecteur_doc);
 	}	
 	
-	// Calculer la similarité cosinus entre deux vecteurs
+	// Calculer la similarité cosinus de deux vecteurs
 	public double SimilariteCos(Vector<Double> v1, Vector<Double> v2) {
 		double prod_scalaire = 0;
 		for(int i=0; i<v2.size(); ++i) {
@@ -22,7 +22,7 @@ public class SimilariteCosinus {
 		return prod_scalaire / (NormeVecteur(v2) * NormeVecteur(v1));		
 	}	
 	
-	// Calculer la norme d'une vecteur
+	// Calculer la norme d'un vecteur
 	public double NormeVecteur(Vector<Double> v) {
 		double norme_vecteur = 0;
 		for(int i=0; i<v.size(); ++i) {
