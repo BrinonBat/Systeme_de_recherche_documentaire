@@ -25,7 +25,7 @@ public class Tokenizer {
             //parcours du fichier et lecture
             br = new BufferedReader(new FileReader(new File(sources.getParent()+"/doclist.txt")));
             while((ligne = br.readLine()) != null){
-                result.add(new File(sources+"/"+ligne));
+                result.add(new File(ligne));
             }
 
         //gestion des erreurs et fermeture du bufferedReader
@@ -52,21 +52,30 @@ public class Tokenizer {
         String ligne="";
 
         try {
-            FileWriter writer = new FileWriter(new File(sources.getParent()+"/doclist.txt"));
+            if(maj){// remise à 0 du contenu du fichier
+                FileWriter writer=new FileWriter(sources.getParent()+"/doclist.txt");
+                writer.close();
+            } 
             //parcours du fichier et lecture
-            for(File fichier : (sources.listFiles(new FiltreSrc())))
-            br = new BufferedReader(new FileReader(fichier));
+            for(File fichier : (sources.listFiles(new FiltreSrc()))){
+                br = new BufferedReader(new FileReader(fichier));
 
-            while((ligne = br.readLine()) != null){
-                if(ligne.substring(0,7).equals("<DOCNO>")){
-                    li_fics.add(new File(sources+"/"+ligne.substring(7,ligne.length()-8)));
-                    if(maj==true) writer.append(sources+"/"+ligne.substring(7,ligne.length()-8)+"\n");
+                while((ligne = br.readLine()) != null){
+                    if(ligne.length()>8){ // évite les erreurs de substring sur les ligne trop petites
+                        if(ligne.substring(0,7).equals("<DOCNO>")){
+                            li_fics.add(new File(sources+"/"+ligne.substring(8,ligne.length()-8)));
+                            if(maj){
+                                FileWriter writer=new FileWriter(sources.getParent()+"/doclist.txt",true);
+                                writer.append(sources+"/"+ligne.substring(8,ligne.length()-8)+"\n");
+                                writer.flush();    
+                                writer.close();
+                            } 
+                        }
+                        // autres données non-traitées.
+                        else {}
+                    }
                 }
-                // autres données non-traitées.
-                else {}
             }
-            if(maj==true) writer.flush();    
-            writer.close();
         //gestion des erreurs et fermeture du bufferedReader
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -95,7 +104,6 @@ public class Tokenizer {
             br = new BufferedReader(new FileReader(fichier));
 
             while((ligne = br.readLine()) != null){
-                System.out.println(ligne);
                 if(ligne.isEmpty() || ligne.isBlank())ligne=br.readLine();
                 if(ligne.charAt(0)!='<'){
                     li_mots.addAll(this.traiter(ligne));
@@ -105,9 +113,7 @@ public class Tokenizer {
 
                 }
                 else if(ligne.substring(1,5).equals("/DOC")){
-                    System.out.println("Doc0.1");
                     matrice_mots.add((ArrayList<String>)li_mots.clone());
-                    System.out.println("Doc0.2");
                     li_mots.clear();
                 }
                 // autres données non-traitées.

@@ -24,7 +24,6 @@ public class Indexer {
         fichier_index=new File("index.csv");
         li_mots=new ArrayList<String>();
         index=new ArrayList<vecFichier>();
-        if(!chargerIndex()) System.out.println("erreur lors de la récupération de l'index");
     }
 
     public void supprime_index(){
@@ -33,7 +32,7 @@ public class Indexer {
 
         // on supprime l'index
         if(fichier_index.exists()){
-            //fichier_index.delete();
+            fichier_index.delete();
             System.out.println("index correctement supprimé !");
         } else {
             System.out.println("aucun index à supprimer.");
@@ -41,53 +40,31 @@ public class Indexer {
     }
 
     // retourne le nombre de fichier manquant à l'index
-    // !!! A METTRE A JOUR (appel à Tokenizer.listerFichier)
     public int nEstPasAJour(){
 
         // uniquement s'il y a un index
         if(fichier_index.exists()){
 
+            int nb_modifs;
+
             //verifie s'il y a un nouvea fichier à indexer
-            ArrayList<File> a_traiter= new ArrayList<File>(); // liste des fichiers à indexer
-            File[] li_source;
-            ArrayList<File> li_fics= new ArrayList<File>(); // liste de fichiers indéxés
+            Tokenizer tokenizer= new Tokenizer(sources);
+            ArrayList<File> li_source=tokenizer.listerFichiers(false); // liste des fichiers dans les sources
+            ArrayList<File> li_fics=tokenizer.listerFichiersDuDoclist(); // liste de fichiers indéxés
+            ArrayList<File> li_fics_tmp=(ArrayList<File>)li_fics.clone(); // sauvegarde temporaire
 
-            // chargement de la liste de fichiers
-            BufferedReader br = null;
-            String ligne="";
-            String separateur= ";";
+            System.out.println(li_source);
+            System.out.println(li_fics);
 
-            try {
-                //parcours du fichier et lecture
-                br = new BufferedReader(new FileReader(fichier_index.getAbsolutePath()));
-                ligne = br.readLine(); // récupération de la ligne listant les fichiers
-                String[]cases= ligne.split(separateur);//séparation en plusieurs "cases"
-                for(int num_col=1;num_col<cases.length;num_col++){
-                    File fic_charge= new File(sources+"/"+cases[num_col]);
-                    li_fics.add(fic_charge);
-                }   
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (br != null) {
-                    try { // fermeture du lecteur de csv
-                        br.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-            /*
-            // retire des fichiers à traiter ceux qui l'ont déjà été
-            for (File tmp_fic : li_sources){
-                if(!li_fics.contains(tmp_fic)){
-                    a_traiter.add(tmp_fic);
-                    //System.out.println(tmp_fic); //affiche les fichiers scannés
-                }
-            }*/
-            return(a_traiter.size());
+            li_fics.removeAll(li_source); // convient les fichiers qui ont été supprimés
+            li_source.removeAll(li_fics_tmp); // contient les fichiers qui ont été ajoutés
+
+            System.out.println(" li_source: "+li_source);
+            System.out.println("\n\n li_fics: "+li_fics);
+
+            nb_modifs=li_fics.size()+li_source.size(); // nombre de fichier à modifier
+            System.out.println(li_fics.size()+" fichiers à supprimer et "+li_source.size()+" fichiers à ajouter");
+            return(nb_modifs);
 
         } else return(sources.listFiles(new FiltreSrc()).length); // s'il n'y a pas d'index, on retourne le nombre de fichiers existants
         
@@ -101,8 +78,6 @@ public class Indexer {
         short nb_rep_mot;
 
         //parcours la liste des fichiers
-        //ArrayList<File> li_sources=tokenizer.listerFichiers(); // prends tous les fichiers sources du dossier
-        
         li_mots=actualiserIndexMots();
         
         //on traite chaque fichier donné en source
@@ -115,9 +90,11 @@ public class Indexer {
 
             //indexation de chaque document contenu dans le fichier source
             for (ArrayList<String> fic_traite : vec_li_mots){
-                System.out.println(" ----> traitement dans "+tmp_fic+" du document"+fic_traite);
-                //creation du vecFichier correspond au fichier actuel
                 num_fic++;
+
+                System.out.println(" ----> traitement dans "+tmp_fic+" du document numero "+num_fic);
+
+                //creation du vecFichier correspond au fichier actuel
                 vecFichier vecFichier_tmp = new vecFichier(tmp_fic,num_fic);
 
                 //pour chaque mot, on vérifie son nombre d'occurence dans le fichier
@@ -128,9 +105,8 @@ public class Indexer {
                     ref.majTf(fic_traite.size()); // calcul du Tf 
                     vecFichier_tmp.ajoutRef(ref);
                 }
-                System.out.println("OK1");
                 index.add(vecFichier_tmp);
-                System.out.println("OK2");
+                System.out.println("fichier ajouté");
             } 
         }
 
@@ -151,10 +127,12 @@ public class Indexer {
         }
         System.out.println("sauvegarde en cours");
         sauverIndex();
+        tokenizer.listerFichiers(true); // mise à jour de l'index de fichiers
     }
     
     // génére l'index à partir du fichier csv. Retourne false s'il y a eu une erreur
     public boolean chargerIndex(){
+        if(!fichier_index.exists()) return true;
         boolean isOk=false;
         BufferedReader br = null;
         String ligne="";
@@ -202,7 +180,6 @@ public class Indexer {
     //exporte l'index en fichier .csv
     private boolean sauverIndex(){
         boolean isOk=false;
-        boolean first = true;
         
         try{
             FileWriter writer = new FileWriter(fichier_index);
@@ -231,7 +208,6 @@ public class Indexer {
                 StringBuilder sb = new StringBuilder();
                 for (String value : a_ajouter) {
                     sb.append(value).append(separators);
-                    first = false;
                 }
                 sb.append("\n");
                 writer.append(sb.toString());
@@ -267,7 +243,7 @@ public class Indexer {
         System.out.print("\n");
     }
 
-    
+    /// retourne la liste de mots contenue dans stem.txt
     private ArrayList<String> actualiserIndexMots(){
         ArrayList<String> result= new ArrayList<String>();
         BufferedReader br = null;
@@ -276,7 +252,7 @@ public class Indexer {
 
         try {
             //parcours du fichier et lecture
-            br = new BufferedReader(new FileReader("Assets/stem.txt"));
+            br = new BufferedReader(new FileReader(sources.getParent()+"/stem.txt"));
             ligne = br.readLine(); // retrait de la première ligne contenant ROOT | WORDS 
 
             // on récupére le mot ROOT pour chaque ligne
