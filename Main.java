@@ -11,7 +11,7 @@ public class Main {
         //s'il n'est pas un jour, averti l'utilisateur
         if(non_indexe>0){
             System.out.println("l'index n'est pas à jour de "+non_indexe+" fichiers, voulez-vous le mettre à jour ? y/n");
-            char reponse='n'; // on remplacera par le retour de l'interface
+            char reponse='y'; // on remplacera par le retour de l'interface
             if(reponse=='y'){
                 indexer.indexation();
             }

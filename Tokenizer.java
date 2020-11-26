@@ -166,7 +166,7 @@ public class Tokenizer {
         return(result);
     }
 
-    private ArrayList<String> traiter(String phrase){
+    public ArrayList<String> traiter(String phrase){
         ArrayList<String> li_mots=new ArrayList<String>();
         ArrayList<String> stop_words=this.recupereStopWords(new File(sources.getParent()+"/stopwords.txt"));
         Stemmer stemmer= new Stemmer();
@@ -202,4 +202,44 @@ public class Tokenizer {
         return li_mots;
     }
 
+    /// retourne la liste de mots contenue dans stem.txt
+    public ArrayList<String> actualiserIndexMots(){
+        ArrayList<String> result= new ArrayList<String>();
+        BufferedReader br = null;
+        String ligne="";
+        String mot;
+
+        try {
+            //parcours du fichier et lecture
+            br = new BufferedReader(new FileReader(sources.getParent()+"/stem.txt"));
+            ligne = br.readLine(); // retrait de la première ligne contenant ROOT | WORDS 
+
+            // on récupére le mot ROOT pour chaque ligne
+            while((ligne = br.readLine()) != null){
+                mot="";
+                for (int i=0; i<ligne.length();i++){
+                    if(ligne.charAt(i)!=('\s')){
+                        mot=mot+ligne.charAt(i);
+                    } else break;
+                }
+                result.add(mot);
+                System.out.println("ajout du mot "+mot+" dans l'index");
+            }
+
+        //gestion des erreurs et fermeture du bufferedReader
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try { // fermeture du lecteur de csv
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return(result);
+    }
 }

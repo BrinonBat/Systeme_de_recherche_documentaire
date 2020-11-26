@@ -77,8 +77,8 @@ public class Indexer {
         Vector<ArrayList<String>> vec_li_mots= new Vector<ArrayList<String>>();
         short nb_rep_mot;
 
-        //parcours la liste des fichiers
-        li_mots=actualiserIndexMots();
+        //récupére la liste de mots à évaluer
+        li_mots=tokenizer.actualiserIndexMots();
         
         //on traite chaque fichier donné en source
         for(File tmp_fic : (sources.listFiles(new FiltreSrc()))){
@@ -243,45 +243,6 @@ public class Indexer {
         System.out.print("\n");
     }
 
-    /// retourne la liste de mots contenue dans stem.txt
-    private ArrayList<String> actualiserIndexMots(){
-        ArrayList<String> result= new ArrayList<String>();
-        BufferedReader br = null;
-        String ligne="";
-        String mot;
-
-        try {
-            //parcours du fichier et lecture
-            br = new BufferedReader(new FileReader(sources.getParent()+"/stem.txt"));
-            ligne = br.readLine(); // retrait de la première ligne contenant ROOT | WORDS 
-
-            // on récupére le mot ROOT pour chaque ligne
-            while((ligne = br.readLine()) != null){
-                mot="";
-                for (int i=0; i<ligne.length();i++){
-                    if(ligne.charAt(i)!=('\s')){
-                        mot=mot+ligne.charAt(i);
-                    } else break;
-                }
-                result.add(mot);
-                System.out.println("ajout du mot "+mot+" dans l'index");
-            }
-
-        //gestion des erreurs et fermeture du bufferedReader
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try { // fermeture du lecteur de csv
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return(result);
-    }
+    
 
 }
