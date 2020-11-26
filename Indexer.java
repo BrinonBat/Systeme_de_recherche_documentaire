@@ -149,6 +149,7 @@ public class Indexer {
 
             }
         }
+        System.out.println("sauvegarde en cours");
         sauverIndex();
     }
     
@@ -163,6 +164,7 @@ public class Indexer {
             //parcours du fichier et lecture
             br = new BufferedReader(new FileReader(fichier_index.getAbsolutePath()));
             for(int num_ligne=0;(ligne = br.readLine()) != null;num_ligne++) {
+                System.out.println("chargement du mot numero "+num_ligne);
 
                //séparation en plusieurs "cases"
                 String[]cases= ligne.split(separateur);
@@ -205,8 +207,9 @@ public class Indexer {
         try{
             FileWriter writer = new FileWriter(fichier_index);
             char separators=';';
-    
-            for(int ligne=0;ligne<=li_mots.size();ligne++){
+            
+            for(int ligne=0;ligne<li_mots.size();ligne++){
+                System.out.println("sauvegarde du mot numero "+ligne+"/"+(li_mots.size()-1));
                 ArrayList<String> a_ajouter=new ArrayList<String>();
                 //ajout de l'en-tête
                 if(ligne==0){
@@ -227,10 +230,7 @@ public class Indexer {
                 //ajout des autres lignes
                 StringBuilder sb = new StringBuilder();
                 for (String value : a_ajouter) {
-                    if (!first) {
-                        sb.append(separators);
-                    }
-                    sb.append(separators).append(value).append(separators);
+                    sb.append(value).append(separators);
                     first = false;
                 }
                 sb.append("\n");
@@ -257,9 +257,9 @@ public class Indexer {
 
         //affichage du contenu de la matrice
         for(int mot=0;mot<li_mots.size();mot++){
-            System.out.print("\n"+li_mots.get(mot));
+            System.out.print("\n"+li_mots.get(mot)+" | ");
             for(int fic=0;fic<index.size();fic++){
-                System.out.print("      "+index.get(fic).getPoids(mot));
+                System.out.print("     "+index.get(fic).getPoids(mot));
             }
         }
 
@@ -277,6 +277,7 @@ public class Indexer {
         try {
             //parcours du fichier et lecture
             br = new BufferedReader(new FileReader("Assets/stem.txt"));
+            ligne = br.readLine(); // retrait de la première ligne contenant ROOT | WORDS 
 
             // on récupére le mot ROOT pour chaque ligne
             while((ligne = br.readLine()) != null){

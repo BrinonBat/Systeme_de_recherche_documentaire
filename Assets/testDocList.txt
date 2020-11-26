@@ -1,2 +1,0 @@
-testIndex
-testIndex2

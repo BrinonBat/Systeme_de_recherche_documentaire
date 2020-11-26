@@ -23,7 +23,7 @@ public class Tokenizer {
 
         try {
             //parcours du fichier et lecture
-            br = new BufferedReader(new FileReader("Assets/doclist.txt"));
+            br = new BufferedReader(new FileReader(new File(sources.getParent()+"/doclist.txt")));
             while((ligne = br.readLine()) != null){
                 result.add(new File(sources+"/"+ligne));
             }
@@ -52,7 +52,7 @@ public class Tokenizer {
         String ligne="";
 
         try {
-            FileWriter writer = new FileWriter("Assets/doclist.txt");
+            FileWriter writer = new FileWriter(new File(sources.getParent()+"/doclist.txt"));
             //parcours du fichier et lecture
             for(File fichier : (sources.listFiles(new FiltreSrc())))
             br = new BufferedReader(new FileReader(fichier));
@@ -134,7 +134,7 @@ public class Tokenizer {
     private ArrayList<String> recupereStopWords(File liste){
         ArrayList<String> result= new ArrayList<String>();
         BufferedReader br = null;
-        String ligne="";
+        String ligne;
 
         try {
             //parcours du fichier et lecture

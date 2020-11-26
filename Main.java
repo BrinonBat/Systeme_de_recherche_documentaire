@@ -7,6 +7,7 @@ public class Main {
     	
         //cr�ation de l'indexer et v�rification de s'il est � jour
         Indexer indexer= new Indexer("Assets/AP/");
+        //indexer.afficherIndex();
         /*int non_indexe=indexer.nEstPasAJour();
         //s'il n'est pas un jour, averti l'utilisateur
         if(non_indexe>0){
