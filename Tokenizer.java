@@ -176,6 +176,7 @@ public class Tokenizer {
         // tokenisation
         for(int i=0;i<phrase.length();i++){
             
+            System.out.println(" taille de phrase :"+phrase.length()+" indice actuel: "+i);
             if(Character.isSpaceChar(phrase.charAt(i))){ // séparateur de mots
                 if(est_mot){ // si un mot était en cours de formation
                     //passage au stemmer
@@ -198,7 +199,7 @@ public class Tokenizer {
                 }
             }
         }
-
+        System.out.println(phrase);
         return li_mots;
     }
 

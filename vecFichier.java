@@ -10,10 +10,6 @@ public class vecFichier {
         nom_fichier=fic.getName();
         vec_refs=new Vector<Reference>();
     }
-    public vecFichier(File fic,Reference ref){
-        new vecFichier(fic);
-        
-    }
     public vecFichier(File fic,short numero){
         String num=Integer.toString(numero);
         switch(num.length()){
@@ -35,10 +31,16 @@ public class vecFichier {
         vec_refs=new Vector<Reference>();
     }
 
+    //getters
     public float getPoids(int position){
         return vec_refs.get(position).getPoids();
     }
 
+    public Vector<Reference> getRefs(){
+        return vec_refs;
+    }
+
+    //setters
     public void setIDF(int position, double idf){
         vec_refs.get(position).setPoids(idf);
     }

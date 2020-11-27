@@ -243,6 +243,6 @@ public class Indexer {
         System.out.print("\n");
     }
 
-    
+    public ArrayList<vecFichier> getIndex(){return index;}
 
 }

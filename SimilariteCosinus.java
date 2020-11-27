@@ -3,30 +3,33 @@ import java.util.Vector;
 
 public class SimilariteCosinus {
 	
-	private Vector<Float> vecteur_req;
-	private Vector<Float> vecteur_doc;
+	private Vector<Reference> vecteur_req;
 	
 	// Constructeur
-	public SimilariteCosinus(Vector<Float> vecteur_req, Vector<Float> vecteur_doc) {
+	public SimilariteCosinus(Vector<Reference> vecteur_req){
 		this.vecteur_req = vecteur_req;
-		this.vecteur_doc = vecteur_doc;
-		SimilariteCos(vecteur_req, vecteur_doc);
 	}	
 	
 	// Calculer la similarit� cosinus de deux vecteurs
-	public Float SimilariteCos(Vector<Float> v1, Vector<Float> v2) {
+	public float SimilariteCos(Vector<Reference> vecteur_doc) {
 		float prod_scalaire = 0;
-		for(int i=0; i<v2.size(); ++i) {
-			prod_scalaire += v2.get(i) * v1.get(i);
+		for(int i=0; i<vecteur_doc.size(); ++i) {
+			prod_scalaire += vecteur_doc.get(i).getPoids() * vecteur_req.get(i).getPoids();
 		}
-		return prod_scalaire / (NormeVecteur(v2) * NormeVecteur(v1));		
+		
+		// A MODIFIER AVEC LE COURS CAR TEMPORAIRE
+		float div=(NormeVecteur(vecteur_doc) * NormeVecteur(vecteur_req));
+		if(div>0){
+			System.out.println("resut cos : "+prod_scalaire / div);
+			return prod_scalaire / div;
+		} else return 0;
 	}	
 	
 	// Calculer la norme d'un vecteur
-	public float NormeVecteur(Vector<Float> v) {
+	private float NormeVecteur(Vector<Reference> v) {
 		float norme_vecteur = 0;
 		for(int i=0; i<v.size(); ++i) {
-			norme_vecteur += Math.pow(v.get(i), 2);
+			norme_vecteur += Math.pow(v.get(i).getPoids(), 2);
 		}
 		return (float)Math.sqrt(norme_vecteur);		
 	}

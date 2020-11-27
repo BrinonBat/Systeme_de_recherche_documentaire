@@ -20,8 +20,8 @@ Pour la mise en place de ce projet, nous disposons de 4 semaines (redaction de r
 	- [x] utilisation du Stemmer
 	- [x] implémentation d'une première interface 
 3. mise en pace du système de requêtes et optimisation
-	- [ ] traitement des requêtes
-	- [ ] ajout de la prise en compte de la pertinence
+	- [x] traitement des requêtes
+	- [x] ajout de la prise en compte de la pertinence
 	- [ ] mispel correction
 	- [ ] ~~optimisation du système~~
 4. peauffinage et conclusion
