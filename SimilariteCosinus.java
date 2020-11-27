@@ -3,19 +3,19 @@ import java.util.Vector;
 
 public class SimilariteCosinus {
 	
-	private Vector<Double> vecteur_req;
-	private Vector<Double> vecteur_doc;
+	private Vector<Float> vecteur_req;
+	private Vector<Float> vecteur_doc;
 	
 	// Constructeur
-	public SimilariteCosinus(Vector<Double> vecteur_req, Vector<Double> vecteur_doc) {
+	public SimilariteCosinus(Vector<Float> vecteur_req, Vector<Float> vecteur_doc) {
 		this.vecteur_req = vecteur_req;
 		this.vecteur_doc = vecteur_doc;
 		SimilariteCos(vecteur_req, vecteur_doc);
 	}	
 	
-	// Calculer la similarité cosinus de deux vecteurs
-	public double SimilariteCos(Vector<Double> v1, Vector<Double> v2) {
-		double prod_scalaire = 0;
+	// Calculer la similaritï¿½ cosinus de deux vecteurs
+	public Float SimilariteCos(Vector<Float> v1, Vector<Float> v2) {
+		float prod_scalaire = 0;
 		for(int i=0; i<v2.size(); ++i) {
 			prod_scalaire += v2.get(i) * v1.get(i);
 		}
@@ -23,20 +23,20 @@ public class SimilariteCosinus {
 	}	
 	
 	// Calculer la norme d'un vecteur
-	public double NormeVecteur(Vector<Double> v) {
-		double norme_vecteur = 0;
+	public float NormeVecteur(Vector<Float> v) {
+		float norme_vecteur = 0;
 		for(int i=0; i<v.size(); ++i) {
 			norme_vecteur += Math.pow(v.get(i), 2);
 		}
-		return Math.sqrt(norme_vecteur);		
+		return (float)Math.sqrt(norme_vecteur);		
 	}
 }
 
 /*
  *	Dans la classe appelante :
- *	Représenter la requête comme un vecteur
- *	Représenter chaque document comme un vecteur
- *	À lancer pour le "vecteur de requête" et chaque "vecteur de document"
- *	Récupérer les similarités cosinus (scores) dans un tableau
- *	Tableau par ordre décroissant => Ordre d'affichage des résultats
+ *	Reprï¿½senter la requï¿½te comme un vecteur
+ *	Reprï¿½senter chaque document comme un vecteur
+ *	ï¿½ lancer pour le "vecteur de requï¿½te" et chaque "vecteur de document"
+ *	Rï¿½cupï¿½rer les similaritï¿½s cosinus (scores) dans un tableau
+ *	Tableau par ordre dï¿½croissant => Ordre d'affichage des rï¿½sultats
 */
