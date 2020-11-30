@@ -6,7 +6,7 @@ import java.util.Vector;
 public class Requete {
     private Vector<Reference> vec_ref = new Vector<Reference>();
 
-    Requete(File src, String phrase){
+    Requete(ArrayList<vecFichier> index,File src, String phrase){
         Tokenizer tokenizer= new Tokenizer(src);
         ArrayList<String> li_mots=tokenizer.actualiserIndexMots(); //li_mots pas OK
 
@@ -19,39 +19,28 @@ public class Requete {
 
         //System.out.println("actualisation d'index terminée; li_mots:"+li_mots);
         //traitement de la requête en calculant les TF
-        for(String mot : li_mots){
-            Short nb_rep_mot=(short)Collections.frequency(mots_phrase, mot);
+        for(int pos=0,quantite=0; pos<li_mots.size()-1;pos++){
+            Short nb_rep_mot=(short)Collections.frequency(mots_phrase, li_mots.get(pos));
             Reference ref=new Reference();
             ref.setQte(nb_rep_mot); // ajout de la frequence du mot testé
             ref.majTf(li_mots.size()); // calcul du Tf 
             vec_ref.add(ref);
-            //System.out.println("mot numero "+vec_ref.size()+" traité");
-        }
 
-        //calcul des IDF et mise à jour des poids
-        /* A FAIRE 
-        // on mets à jour la matrice en ajoutant les IDF
-        for(int ligne=0;ligne<li_mots.size();ligne++){
-            Short nb_doc=0;
-            //parcours des documents pour compter ceux qui ont au moins une occurence du mot
-            for (int colonne=0;colonne<index.size();colonne++){
-                if(index.get(colonne).contientMot(ligne)) nb_doc++;
+            // calcul de l'IDF du mot
+            for(vecFichier vecteur : index){
+                if(vecteur.getPoids(pos)>0){
+                    quantite++;
+                }
             }
-            //mise à jour du IDF
-            double idf=((double)index.size()/nb_doc);
-            //mise à jour des poids en fonction de l'IDF
-            for (int colonne=0;colonne<index.size();colonne++){
-                index.get(colonne).setIDF(ligne,idf);
 
-            } */
-
-            //solution temporaire
-            double idf=1.0;
-            for (int num_ref=0;num_ref<vec_ref.size();num_ref++){
-                vec_ref.get(num_ref).setPoids(idf);
-
-            } 
-
+            // maj du poids avec l'IDF
+            if(quantite>0){
+                ref.setPoids((li_mots.size()/quantite));
+            } else {
+                ref.setPoids(1); // dans ce cas là, on calcule le poids avec 1 d'idf pour que son log soit de 0.
+            }
+            System.out.println("mot numero "+vec_ref.size()+"/"+li_mots.size()+" traité");
+        }
         System.out.println("traitement terminé !");
     } 
 

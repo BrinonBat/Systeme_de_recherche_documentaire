@@ -8,10 +8,12 @@ public class SimilariteCosinus {
 	// Constructeur
 	public SimilariteCosinus(Vector<Reference> vecteur_req){
 		this.vecteur_req = vecteur_req;
+		System.out.println("requete : "+vecteur_req);
 	}	
 	
 	// Calculer la similarit� cosinus de deux vecteurs
 	public float SimilariteCos(Vector<Reference> vecteur_doc) {
+		//System.out.println("vecteur doc : "+vecteur_doc);
 		float prod_scalaire = 0;
 		for(int i=0; i<vecteur_doc.size(); ++i) {
 			prod_scalaire += vecteur_doc.get(i).getPoids() * vecteur_req.get(i).getPoids();

@@ -22,7 +22,9 @@ public class Main {
            if(!indexer.chargerIndex()) System.out.println("erreur lors de la récupération de l'index");
             System.out.println(" l'index est à jour !");
         }
-        Requete saisie=new Requete(new File(sources),"constructive relationship with the United States.");
+
+        // supposé afficher AP890101-0001 en premier.
+        Requete saisie=new Requete(indexer.getIndex(),new File(sources),"Cuba's ties with the Soviet Union appear to have entered a period of uncertainty as a result of ideological differences. On other fronts, Cuban diplomats say a visit here by Pope John Paul II may be possible in 1989, and Cuba has hinted that it wants a more constructive relationship with the United States.");
         ArrayList<File> resultats= saisie.documentsCorrespondants(indexer.getIndex());
     }
 

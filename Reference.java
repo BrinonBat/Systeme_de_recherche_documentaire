@@ -23,8 +23,8 @@ public class Reference {
     public void setPoids(double idf){
         if(tf==0) idf=0;
         else{
-            this.poids=(float)((Math.log10(1+tf))*(Math.log10(idf)));
-            this.poids=(float)((Math.round(poids * 1000000000.0)) / 1000000.0);
+            this.poids=(float)(tf*(Math.log10(idf)));
+            this.poids=(float)/*((Math.round(poids * 1000000000.0)) / 1000000.0)*/poids*1000000;
         } ;
     }
 
@@ -36,6 +36,10 @@ public class Reference {
 
     public void majTf(int nb_mots){
         this.tf=((float)quantite/nb_mots);
+    }
+
+    public String toString(){
+        return Float.toString(poids);
     }
 }
 
