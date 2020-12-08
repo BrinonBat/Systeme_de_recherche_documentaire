@@ -12,6 +12,7 @@ public class Requete {
 
         //liste de mots contenus dans la requête qui sont à traiter
         ArrayList<String>mots_phrase=tokenizer.traiter(phrase);
+        System.out.println("phrase traitée :"+mots_phrase);
 
         System.out.println("traitement de la requete ...");
 
@@ -19,7 +20,7 @@ public class Requete {
 
         //System.out.println("actualisation d'index terminée; li_mots:"+li_mots);
         //traitement de la requête en calculant les TF
-        for(int pos=0,quantite=0; pos<li_mots.size()-1;pos++){
+        for(int pos=0,quantite=0; pos<li_mots.size();pos++){
             Short nb_rep_mot=(short)Collections.frequency(mots_phrase, li_mots.get(pos));
             Reference ref=new Reference();
             ref.setQte(nb_rep_mot); // ajout de la frequence du mot testé
@@ -39,7 +40,7 @@ public class Requete {
             } else {
                 ref.setPoids(1); // dans ce cas là, on calcule le poids avec 1 d'idf pour que son log soit de 0.
             }
-            System.out.println("mot numero "+vec_ref.size()+"/"+li_mots.size()+" traité");
+            System.out.println("mot numero "+vec_ref.size()+"/"+li_mots.size()+" traité :"+li_mots.get(pos)+"dans "+mots_phrase);
         }
         System.out.println("traitement terminé !");
     } 

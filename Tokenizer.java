@@ -167,13 +167,16 @@ public class Tokenizer {
     }
 
     public ArrayList<String> traiter(String phrase){
+        phrase=phrase+" "; //ajout d'un espace pour conclure le dernier mot et ainsi le traiter
         ArrayList<String> li_mots=new ArrayList<String>();
         ArrayList<String> stop_words=this.recupereStopWords(new File(sources.getParent()+"/stopwords.txt"));
         Stemmer stemmer= new Stemmer();
         String mot;
+        String TMPASUPPRIMER="";
         boolean est_mot=false;
 
         // tokenisation
+        System.out.println("phrase à traiter: "+phrase);
         for(int i=0;i<phrase.length();i++){
             
             System.out.println(" taille de phrase :"+phrase.length()+" indice actuel: "+i);
@@ -182,12 +185,13 @@ public class Tokenizer {
                     //passage au stemmer
                     stemmer.stem();
                     mot=stemmer.toString();
-
+                    TMPASUPPRIMER="";
                     est_mot=false;
 
                     //stoplist et ajout
                     if(!stop_words.contains(mot)){
                         li_mots.add(mot);
+                        System.out.println("ajout du mot "+mot+" dans li_mots :"+li_mots);
                     }
                 }
             }
@@ -196,6 +200,7 @@ public class Tokenizer {
                 //on compose les mots avec ce filtre
                 if(Character.isLetterOrDigit(phrase.charAt(i)) || phrase.charAt(i)=='-'){
                     stemmer.add(Character.toLowerCase(phrase.charAt(i)));
+                    TMPASUPPRIMER+=phrase.charAt(i);
                 }
             }
         }

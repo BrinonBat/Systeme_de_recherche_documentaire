@@ -22,7 +22,7 @@ public class SimilariteCosinus {
 		// A MODIFIER AVEC LE COURS CAR TEMPORAIRE
 		float div=(NormeVecteur(vecteur_doc) * NormeVecteur(vecteur_req));
 		if(div>0){
-			System.out.println("resut cos : "+prod_scalaire / div);
+			System.out.println("valeure score :"+prod_scalaire+"\n resut cos : "+prod_scalaire / div);
 			return prod_scalaire / div;
 		} else return 0;
 	}	

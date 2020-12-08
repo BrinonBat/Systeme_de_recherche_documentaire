@@ -1,0 +1,5 @@
+ROOTS | WORDS
+second | second sec secon seco
+third | third thir 
+first | first firs fir
+nothing | nothing noth

@@ -78,7 +78,7 @@ public class Fenetre extends JFrame {
 		menu_fichier = new JMenu("Fichier");
 		menu_aide = new JMenu("Aide ?");
 		item_quitter = new JMenuItem("Quitter");
-		item_rech_mise_a_jour = new JMenuItem("Rechecher les mises à jour...");
+		item_rech_mise_a_jour = new JMenuItem("Rechecher les mises ï¿½ jour...");
 		menu_fichier.add(item_quitter);
 		menu_aide.add(item_rech_mise_a_jour);
 		menu_bar.add(menu_fichier);
@@ -101,7 +101,7 @@ public class Fenetre extends JFrame {
 	    scroll_pane_2 = new JScrollPane(area_recherche);
 	    scroll_pane_2.setBorder(BorderFactory.createEmptyBorder());
 	    
-	  //Text area pour afficher le nombre de résultatde la recherche
+	  //Text area pour afficher le nombre de rï¿½sultatde la recherche
 	    area_nbr_resultat = new JTextArea(1,91);
 		area_nbr_resultat.setFont(police_1);
 		area_nbr_resultat.setEditable(false);
@@ -111,7 +111,7 @@ public class Fenetre extends JFrame {
 	    scroll_pane_3 = new JScrollPane(area_nbr_resultat);
 	    scroll_pane_3.setBorder(BorderFactory.createEmptyBorder());		
 		
-		// Ajout des différents composants au conteneur principal
+		// Ajout des diffï¿½rents composants au conteneur principal
 		conteneur.add(champ_recherche);
 		conteneur.add(btn_recherche);
 		conteneur.add(scroll_pane_2);
@@ -125,15 +125,15 @@ public class Fenetre extends JFrame {
 			}
 			});		
 		
-		// Vérification des mises à jour
+		// Vï¿½rification des mises ï¿½ jour
 		item_rech_mise_a_jour.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent evenement) {
-				// Création de l'index
-				//indexer= new Indexer(sources);
+				// Crï¿½ation de l'index
+				indexer= new Indexer(sources);
 				
 				int non_indexe = indexer.nEstPasAJour();
 				
-				// Si l'index n'est pas à jour
+				// Si l'index n'est pas ï¿½ jour
 				if(non_indexe>0){
 					boite_conf_mise_ajr = new JOptionPane();
 					int option = boite_conf_mise_ajr.showConfirmDialog(
@@ -142,9 +142,9 @@ public class Fenetre extends JFrame {
 					
 					// Si btn = ok
 					if(option == JOptionPane.OK_OPTION){
-						// Lancement des mises à jour
+						// Lancement des mises ï¿½ jour
 						indexer.indexation();
-						// à la fin de la mise à jour afficher une boite d'information
+						// ï¿½ la fin de la mise ï¿½ jour afficher une boite d'information
 						boite_info_mise_ajr_ok = new JOptionPane();
 						boite_info_mise_ajr_ok.showMessageDialog(null, "Mise a jour teminee, l'index est a jour", "Information",
 						JOptionPane.INFORMATION_MESSAGE);					
@@ -194,7 +194,7 @@ public class Fenetre extends JFrame {
 					// Titres de la table d'affichage
 					String[] titres = {"<html><b>RESULTATS DE LA RECHERCHE</b></html>"};					
 					
-					// Création de la table qui recevera les résultats de la recherche 
+					// Crï¿½ation de la table qui recevera les rï¿½sultats de la recherche 
 					table = new JTable();
 					DefaultTableModel tableModel = new DefaultTableModel(resultat_table, titres);
 			        table.setModel(tableModel);

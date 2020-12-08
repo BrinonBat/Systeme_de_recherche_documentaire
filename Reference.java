@@ -24,7 +24,7 @@ public class Reference {
         if(tf==0) idf=0;
         else{
             this.poids=(float)(tf*(Math.log10(idf)));
-            this.poids=(float)/*((Math.round(poids * 1000000000.0)) / 1000000.0)*/poids*1000000;
+            this.poids=(float)/*((Math.round(poids * 1000000000.0)) / 1000000.0)*/poids*100000;
         } ;
     }
 
