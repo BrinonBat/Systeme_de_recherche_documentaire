@@ -3,8 +3,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.LineNumberReader;
-import java.lang.reflect.Array;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +16,7 @@ public class Indexer {
     private ArrayList<String> li_mots; // liste de mots indexés
     File fichier_index; // index
 
-    //constructeur
+    /// constructeur
     public Indexer(String chemin){
         sources = new File(chemin);
         fichier_index=new File("index.csv");
@@ -26,20 +24,21 @@ public class Indexer {
         index=new ArrayList<vecFichier>();
     }
 
-    public void supprime_index(){
+    /// supprime l'index actuel
+    private void supprime_index(){
         li_mots.clear(); // on vide la liste des mots testés
         index.clear(); // on vide l'index
 
         // on supprime l'index
         if(fichier_index.exists()){
             fichier_index.delete();
-            System.out.println("index correctement supprimé !");
+            System.out.println("Index correctement supprimé !");
         } else {
-            System.out.println("aucun index à supprimer.");
+            System.out.println("Aucun index à supprimer.");
         }
     }
 
-    // retourne le nombre de fichier manquant à l'index
+    /// retourne le nombre de fichier manquant à l'index
     public int nEstPasAJour(){
 
         // uniquement s'il y a un index
@@ -53,14 +52,8 @@ public class Indexer {
             ArrayList<File> li_fics=tokenizer.listerFichiersDuDoclist(); // liste de fichiers indéxés
             ArrayList<File> li_fics_tmp=(ArrayList<File>)li_fics.clone(); // sauvegarde temporaire
 
-            System.out.println(li_source);
-            System.out.println(li_fics);
-
             li_fics.removeAll(li_source); // convient les fichiers qui ont été supprimés
             li_source.removeAll(li_fics_tmp); // contient les fichiers qui ont été ajoutés
-
-            System.out.println(" li_source: "+li_source);
-            System.out.println("\n\n li_fics: "+li_fics);
 
             nb_modifs=li_fics.size()+li_source.size(); // nombre de fichier à modifier
             System.out.println(li_fics.size()+" fichiers à supprimer et "+li_source.size()+" fichiers à ajouter");
@@ -70,7 +63,9 @@ public class Indexer {
         
     }
 
+    /// regénére un nouvel index du dossier source
     public void indexation(){
+
         //préparation à l'indexation
         supprime_index();
         Tokenizer tokenizer= new Tokenizer(sources);
@@ -83,7 +78,6 @@ public class Indexer {
         //on traite chaque fichier donné en source
         for(File tmp_fic : (sources.listFiles(new FiltreSrc()))){
             short num_fic=0;
-            System.out.println("traitement du fichier "+tmp_fic); //affiche les fichiers scannés
  
             // tokenization & stemmer & stopwords
             vec_li_mots=tokenizer.RecupereMots(tmp_fic);
@@ -106,7 +100,7 @@ public class Indexer {
                     vecFichier_tmp.ajoutRef(ref);
                 }
                 index.add(vecFichier_tmp);
-                System.out.println("fichier ajouté");
+                System.out.println("Document ajouté");
             } 
         }
 
@@ -125,24 +119,29 @@ public class Indexer {
 
             }
         }
-        System.out.println("sauvegarde en cours");
+        System.out.println("Sauvegarde en cours");
         sauverIndex();
         tokenizer.listerFichiers(true); // mise à jour de l'index de fichiers
     }
-    
-    // génére l'index à partir du fichier csv. Retourne false s'il y a eu une erreur
+
+    /**
+     * génére l'index à partir du fichier csv. Retourne 
+     *  @return false s'il y a eu une erreur
+     */
     public boolean chargerIndex(){
         if(!fichier_index.exists()) return true;
         boolean isOk=false;
         BufferedReader br = null;
         String ligne="";
         String separateur= ";";
+        
+        System.out.println("Chargement de l'index ...");
 
         try {
             //parcours du fichier et lecture
             br = new BufferedReader(new FileReader(fichier_index.getAbsolutePath()));
             for(int num_ligne=0;(ligne = br.readLine()) != null;num_ligne++) {
-                System.out.println("chargement du mot numero "+num_ligne);
+                
 
                //séparation en plusieurs "cases"
                 String[]cases= ligne.split(separateur);
@@ -177,7 +176,10 @@ public class Indexer {
         return isOk;
     }    
 
-    //exporte l'index en fichier .csv
+     /**
+     * exporte l'index en fichier .csv
+     *  @return false s'il y a eu une erreur
+     */
     private boolean sauverIndex(){
         boolean isOk=false;
         
@@ -186,7 +188,7 @@ public class Indexer {
             char separators=';';
             
             for(int ligne=0;ligne<=li_mots.size();ligne++){
-                System.out.println("sauvegarde du mot numero "+ligne+"/"+(li_mots.size()));
+                System.out.println("Sauvegarde du mot numero "+ligne+"/"+(li_mots.size()));
                 ArrayList<String> a_ajouter=new ArrayList<String>();
                 //ajout de l'en-tête
                 if(ligne==0){
@@ -222,27 +224,16 @@ public class Indexer {
         return isOk;
     }
 
-    public void afficherIndex(){
-        //Mots est hors des listes, ont doit donc l'afficher à part
-        System.out.print("Mots | ");
-
-        //affichage de la liste de fichiers
-        for(int fic=0;fic<index.size();fic++){
-            System.out.print(index.get(fic).getNomFichier()+" | ");
-        }
-
-        //affichage du contenu de la matrice
-        for(int mot=0;mot<li_mots.size();mot++){
-            System.out.print("\n"+li_mots.get(mot)+" | ");
-            for(int fic=0;fic<index.size();fic++){
-                System.out.print("     "+index.get(fic).getPoids(mot));
-            }
-        }
-
-        //saut de ligne pour plus de confort visuel
-        System.out.print("\n");
-    }
-
+    ///getter
     public ArrayList<vecFichier> getIndex(){return index;}
+
+    /**
+     * change la source de l'indexe
+     * @param nouv_source chemin relatif de la nouvelle source
+     */
+    public void setSource(String nouv_source){
+        sources=new File(nouv_source); // maj de la source
+        indexation(); // maj du contenu
+    }
 
 }

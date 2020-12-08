@@ -26,8 +26,9 @@ Pour la mise en place de ce projet, nous disposons de 4 semaines (redaction de r
 	- [ ] ~~optimisation du système~~
 4. peauffinage et conclusion
 	- [x] débuggage
-	- [ ] amelioration de l'UI
+	- [X] amelioration de l'UI
 	- [x] rédaction du rapport
+	- [x] ajout d'une option de selection de dossier
 5. post-rendu (avant d'archiver le projet)
 	- [ ] terminer ce qui n'a pas pu l'être pour avoir un rendu propre
 	- [ ] mise en place de Javadoc
