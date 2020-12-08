@@ -1,0 +1,29 @@
+<DOC>
+<DOCNO> AP891216-0001 </DOCNO>
+<FILEID>AP-NR-12-16-89 0016EST</FILEID>
+<HEAD>the first test out of all</HEAD>
+<DATELINE>PANAMA CITY, Panama (AP) </DATELINE>
+<TEXT>
+  This is the first text.at first, it seams like the word first is very present. But second is here too
+</TEXT>
+</DOC>
+
+<DOC>
+<DOCNO> AP891216-0002 </DOCNO>
+<FILEID>AP-NR-12-16-89 0020EST</FILEID>
+<HEAD>The second test </HEAD>
+<DATELINE>CHICAGO (AP) </DATELINE>
+<TEXT>
+  This is the second test. It contains more time the word second than the other texts, but the first document contains one too.
+</TEXT>
+</DOC>
+
+<DOC>
+<DOCNO> AP891216-0003 </DOCNO>
+<FILEID>AP-NR-12-16-89 0021EST</FILEID>
+<HEAD>the third and last test </HEAD>
+<DATELINE>JOHNSON CITY, Tenn. (AP) </DATELINE>
+<TEXT>
+  This is the third test. Nothing really is written here, but he deserves the purpose of filling an alone test case. Poor of him.
+</TEXT>
+</DOC>
