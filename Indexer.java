@@ -118,7 +118,7 @@ public class Indexer {
                 if(index.get(colonne).contientMot(ligne)) nb_doc++;
             }
             //mise à jour du IDF
-            double idf=((double)index.size()/nb_doc);
+            double idf=((double)index.size()/nb_doc)+1.0;
             //mise à jour des poids en fonction de l'IDF
             for (int colonne=0;colonne<index.size();colonne++){
                 index.get(colonne).setIDF(ligne,idf);
@@ -185,8 +185,8 @@ public class Indexer {
             FileWriter writer = new FileWriter(fichier_index);
             char separators=';';
             
-            for(int ligne=0;ligne<li_mots.size();ligne++){
-                System.out.println("sauvegarde du mot numero "+ligne+"/"+(li_mots.size()-1));
+            for(int ligne=0;ligne<=li_mots.size();ligne++){
+                System.out.println("sauvegarde du mot numero "+ligne+"/"+(li_mots.size()));
                 ArrayList<String> a_ajouter=new ArrayList<String>();
                 //ajout de l'en-tête
                 if(ligne==0){
@@ -201,7 +201,7 @@ public class Indexer {
                     a_ajouter.add(li_mots.get(ligne-1));
                     //ajout des poids de chaque fichier pour ce mot
                     for(int numFic=0;numFic<index.size();numFic++){
-                        a_ajouter.add(Float.toString(index.get(numFic).getPoids(ligne)));
+                        a_ajouter.add(Float.toString(index.get(numFic).getPoids(ligne-1)));
                     }
                 }
                 //ajout des autres lignes

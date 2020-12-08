@@ -22,11 +22,12 @@ Pour la mise en place de ce projet, nous disposons de 4 semaines (redaction de r
 3. mise en pace du système de requêtes et optimisation
 	- [x] traitement des requêtes
 	- [x] ajout de la prise en compte de la pertinence
-	- [ ] mispel correction
+	- [ ] ~~mispel correction~~
 	- [ ] ~~optimisation du système~~
 4. peauffinage et conclusion
+	- [x] débuggage
 	- [ ] amelioration de l'UI
-	- [ ] rédaction du rapport
+	- [x] rédaction du rapport
 5. post-rendu (avant d'archiver le projet)
 	- [ ] terminer ce qui n'a pas pu l'être pour avoir un rendu propre
 	- [ ] mise en place de Javadoc
