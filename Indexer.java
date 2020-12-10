@@ -220,7 +220,7 @@ public class Indexer {
         }catch (IOException e) {
             e.printStackTrace();
         }
-        
+        System.out.println(" sauvegarde terminée ! vous pouvez faire une recherche");
         return isOk;
     }
 
