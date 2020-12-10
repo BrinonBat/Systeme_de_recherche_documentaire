@@ -57,6 +57,11 @@ public class vecFichier {
         vec_refs.add(ref);
     }
 
+    /**
+     * indique si le mot à la position prise en paramètre est dans le fichier
+     * @param position position du mot à tester dans la liste de mots
+     * @return booléen indiquant si oui ou non le mot à la position prise en paramètre est contenu dans le fichier
+     */
     public boolean contientMot(int position){
         return (vec_refs.get(position).getQuantite()>0);
     }
